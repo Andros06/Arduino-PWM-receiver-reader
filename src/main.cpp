@@ -31,24 +31,6 @@ void loop() {
   ch3 = pulseIn(6, HIGH, 25000);
   ch4 = analogRead(A0);
 
-  mappedch2 = constrain(map(ch2, 2015, 1075, -100, 100), -100, 100);
-  mappedch3 = constrain(map(ch3, 1469, 1575, -100, 100), -100, 100);
-
-  if(ch1 > 1800){
-    mappedch1 = 1;
-  }
-  else{
-    mappedch1 = 0;
-  }
-
-  if( mappedch2 < 5 && mappedch2 > -5){
-    mappedch2 = 0;
-  }
-
-  if( mappedch3 < 1525 && mappedch3 > 1515){
-    mappedch3 = 0;
-  }
-
   if((ch4 > 300) && !Switch){
    StartTime = millis();
    Switch = true;
@@ -66,20 +48,37 @@ void loop() {
   }
   }
 
+  if(Pulsing){
+    mappedch1 = 0;
+    mappedch2 = 0;
+    mappedch3 = 0;
+  }else{
+
+  mappedch2 = constrain(map(ch2, 2015, 1075, -100, 100), -100, 100);
+  mappedch3 = constrain(map(ch3, 1469, 1575, -100, 100), -100, 100);
+
+  if(ch1 > 1800){
+    mappedch1 = 2;
+  }
+  else{
+    mappedch1 = 1;
+  }
+
+  if( mappedch2 < 5 && mappedch2 > -5){
+    mappedch2 = 0;
+  }
+
+  if( mappedch3 < 1525 && mappedch3 > 1515){
+    mappedch3 = 0;
+  }
+
+  }
+
   
   //Serial.println(mappedch1);
   //Serial.println(mappedch2);
   //Serial.println(mappedch3);
-  //Serial.println(ch4);
+  Serial.println(ch3);
   
-  if (!Pulsing){
-    Serial.println("Backup tilkoplet!!");
-  }
-
-  if (Pulsing){
-    Serial.println("Backup er ikkje tilkoplet!!");
-  }
-  
-
   delay(100); 
 }
